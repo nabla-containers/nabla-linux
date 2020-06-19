@@ -3,7 +3,7 @@
 	url = https://github.com/nabla-containers/linux-um-nommu.git
 [submodule "busybox"]
 	path = busybox
-	url = https://github.com/mirror/busybox.git
+	url = https://github.com/nabla-containers/busybox.git
 [submodule "musl-libc"]
 	path = musl-libc
 	url = https://github.com/nabla-containers/musl-libc.git
