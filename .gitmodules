@@ -7,3 +7,6 @@
 [submodule "musl-libc"]
 	path = musl-libc
 	url = https://github.com/nabla-containers/musl-libc.git
+[submodule "kernel-headers"]
+	path = kernel-headers
+	url = https://github.com/sabotage-linux/kernel-headers.git
