@@ -1,0 +1,6 @@
+[submodule "linux-um-nommu"]
+	path = linux-um-nommu
+	url = https://github.com/nabla-containers/linux-um-nommu.git
+[submodule "busybox"]
+	path = busybox
+	url = https://github.com/mirror/busybox.git
