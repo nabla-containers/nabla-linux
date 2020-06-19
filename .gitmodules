@@ -4,3 +4,6 @@
 [submodule "busybox"]
 	path = busybox
 	url = https://github.com/mirror/busybox.git
+[submodule "musl-libc"]
+	path = musl-libc
+	url = https://github.com/nabla-containers/musl-libc.git
