@@ -35,13 +35,12 @@ cp ${BUSYBOX_PATH}/busybox $mnt/bin/busybox
 # install our "init" file
 cp init.sh $mnt/init.sh
 cp entropy $mnt/
+cp hosts $mnt/etc/hosts
 
 # install musl libc
 cp ${MUSL_PATH}/lib/libc.so $mnt/lib/ld-musl-x86_64.so.1
 cp ${MUSL_PATH}/lib/libc.so $mnt/lib/libc.musl-x86_64.so.1
 cp ${MUSL_PATH}/lib/libc.so $mnt/lib/libc.so
 
-# 2**20 blocks of size 1024 makes 1GB
-#genext2fs -z -f -q -U -P -b $((2**20)) -d $mnt $app.ext3
 sudo umount $mnt
 rm -rf $mnt

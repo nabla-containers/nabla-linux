@@ -25,10 +25,14 @@ sudo mknod -m 666 $mnt/dev/tty c 5 0
 sudo mknod -m 444 $mnt/dev/random c 1 8
 sudo mknod -m 444 $mnt/dev/urandom c 1 9
 
-# install network setup script
+# replace busybox with the nommu busybox
 cp ${BUSYBOX_PATH}/busybox $mnt/bin/busybox
+
+# install our "init" file
 cp init.sh $mnt/init.sh
 cp entropy $mnt/
+cp hosts $mnt/etc/hosts
+
 # install musl libc
 cp ${MUSL_PATH}/lib/libc.so $mnt/lib/ld-musl-x86_64.so.1
 cp ${MUSL_PATH}/lib/libc.so $mnt/lib/libc.musl-x86_64.so.1
