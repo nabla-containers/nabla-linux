@@ -14,3 +14,8 @@ libc:
 busybox: libc
 	cp busybox.config busybox/.config
 	CC=../musl-libc/build/bin/musl-gcc make -j$(nproc) -C busybox
+
+clean:
+	make -C linux-um-nommu clean
+	make -C musl-libc clean
+	make -C busybox clean
