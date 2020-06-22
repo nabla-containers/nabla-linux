@@ -213,7 +213,7 @@ int main(int argc, char **argv)
 	} else if (strcmp(argv[1], "loop") == 0) {
 		printf("looping forever\n");
 		//printf("got %c\n", getchar());
-		//while(1);
+		while(1);
 		exit(0);
 	} else if (strcmp(argv[1], "fork") == 0) {
 		//test_vfork_only();

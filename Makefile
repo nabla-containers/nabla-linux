@@ -1,3 +1,5 @@
+all: linux libc busybox
+
 .PHONY: linux
 linux:
 	cp linux.config linux-um-nommu/.config
@@ -9,6 +11,6 @@ libc:
 	make install -j$(nproc) -C musl-libc
 
 .PHONY: busybox
-busybox:
+busybox: libc
 	cp busybox.config busybox/.config
 	CC=../musl-libc/build/bin/musl-gcc make -j$(nproc) -C busybox
