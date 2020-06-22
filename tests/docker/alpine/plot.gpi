@@ -1,0 +1,3 @@
+set term dumb
+
+plot sin(x)
