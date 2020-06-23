@@ -8,7 +8,8 @@ linux:
 .PHONY: libc
 libc:
 	(cd musl-libc ; ./configure --prefix=`pwd`/build --exec-prefix=`pwd`/build)
-	make install -j$(nproc) -C musl-libc
+	make -j$(nproc) -C musl-libc
+	(cd musl-libc ; make install) # XXX: some issue when doing 'make -C'
 
 .PHONY: busybox
 busybox: libc
