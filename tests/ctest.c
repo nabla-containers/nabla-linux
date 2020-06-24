@@ -203,7 +203,6 @@ int main(int argc, char **argv)
 {
 	int i, ret;
 	int iterations;
-	unsigned long t;
 
 	if (argc < 2) {
 		iterations = 10;
@@ -229,25 +228,15 @@ int main(int argc, char **argv)
 	} else if (strcmp(argv[1], "exit") == 0) {
 		printf("exit");
 		exit_host(0);
+	} else if (strcmp(argv[1], "time") == 0) {
+		struct timeval current_time;
+		gettimeofday(&current_time, NULL);
+		printf("seconds : %ld\nmicro seconds : %ld\n",
+				current_time.tv_sec, current_time.tv_usec);
+		exit(0);
 	} else {
 		printf("default arg\n");
 	}
-
-	/*
-	struct timeval start, end;
-
-	t = gettimeofday(&start, NULL);
-	printf("t=%lx\r\n", t);
-
-	for (i = 0; i < iterations; i++) {
-	}
-
-	t = gettimeofday(&end, NULL);
-	printf("t=%lx\r\n", t);
-
-	printf("%ld\n", ((end.tv_sec * 1000000 + end.tv_usec)
-				- (start.tv_sec * 1000000 + start.tv_usec)));
-	*/
 
 	test_exec_with_vfork_in_vfork();
 
