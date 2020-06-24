@@ -26,7 +26,7 @@ mknod -m 444 $mnt/dev/random c 1 8
 mknod -m 444 $mnt/dev/urandom c 1 9
 
 # replace busybox with the nommu busybox
-cp ${BUSYBOX_PATH}/busybox $mnt/bin/busybox
+cp ${BUSYBOX_BUILD}/busybox $mnt/bin/busybox
 
 # install our "init" file
 cp init.sh $mnt/init.sh

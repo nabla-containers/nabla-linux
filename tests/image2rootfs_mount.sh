@@ -17,6 +17,7 @@ trap "rm $app.tar" EXIT
 docker rm $container_id;
 mnt=$(mktemp -d)
 dd if=/dev/zero of=$app.$fs bs=1 count=0 seek=1G
+sudo chmod og+wr "$app.$fs"
 yes | mkfs."$fs" "$app.$fs"
 mount "$app.$fs" $mnt
 tar -xf $app.tar -C $mnt
@@ -30,7 +31,7 @@ mknod -m 444 $mnt/dev/random c 1 8
 mknod -m 444 $mnt/dev/urandom c 1 9
 
 # replace busybox with the nommu busybox
-cp ${BUSYBOX_PATH}/busybox $mnt/bin/busybox
+cp ${BUSYBOX_BUILD}/busybox $mnt/bin/busybox
 
 # install our "init" file
 cp init.sh $mnt/init.sh

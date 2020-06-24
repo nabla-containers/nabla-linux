@@ -1,7 +1,7 @@
 all: run
 
 MUSL_BUILD ?= ../musl-libc/build
-BUSYBOX_PATH ?= ../busybox
+BUSYBOX_BUILD ?= ../busybox
 VMLINUX ?= ../linux-um-nommu/vmlinux
 
 # sudo is needed for mounting in ./image2rootfs_mount.sh
@@ -9,17 +9,17 @@ VMLINUX ?= ../linux-um-nommu/vmlinux
 # uses genext2fs instead.
 
 alpine-test.ext3: init.sh entropy
-	sudo bash -c 'BUSYBOX_PATH=$(BUSYBOX_PATH) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh kollerr/alpine-test latest ext3'
+	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh kollerr/alpine-test latest ext3'
 
 pytorch-alpine.ext3: init.sh entropy
-	sudo bash -c 'BUSYBOX_PATH=$(BUSYBOX_PATH) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh petronetto/pytorch-alpine latest ext3'
+	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh petronetto/pytorch-alpine latest ext3'
 
 alpine-jupyter-notebook.ext3: init.sh entropy
-	sudo bash -c 'BUSYBOX_PATH=$(BUSYBOX_PATH) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh kollerr/alpine-jupyter-notebook latest ext3'
+	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh kollerr/alpine-jupyter-notebook latest ext3'
 
 # not working as python (from anaconda) is not a PIE executable
 tensorflow-alpine.ext3: init.sh entropy
-	sudo bash -c 'BUSYBOX_PATH=$(BUSYBOX_PATH) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh bwits/tensorflow-alpine latest ext3'
+	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh bwits/tensorflow-alpine latest ext3'
 
 testpie: test.c
 	$(MUSL_BUILD)/bin/musl-gcc -nostdlib -pie -fPIE -fomit-frame-pointer test.c -o $@
