@@ -11,6 +11,9 @@ VMLINUX ?= ../linux-um-nommu/vmlinux
 alpine-test.ext3: init.sh entropy
 	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh kollerr/alpine-test latest ext3'
 
+alpine-test.iso: init.sh entropy
+	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs.sh kollerr/alpine-test latest iso'
+
 pytorch-alpine.ext3: init.sh entropy
 	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh petronetto/pytorch-alpine latest ext3'
 
@@ -76,11 +79,11 @@ run: test_libc.iso
 # measure boot time (time to exit through host exit syscall)
 boot:
 	# install hyperfine (https://github.com/sharkdp/hyperfine.git)
-	taskset -c 0 hyperfine -w 10 -r 30 -i '$(VMLINUX) ubd0=./test_libc.iso ro mem=32m loglevel=0 init=/exit'
+	taskset -c 0 hyperfine -w 10 -r 50 -i '$(VMLINUX) ubd0=./test_libc.iso ro mem=64m loglevel=0 init=/exit'
 
 # measure boot time (time to exit through libc)
 boot_libc:
-	taskset -c 0 hyperfine -w 10 -r 30 -i '$(VMLINUX) ubd0=./test_libc.iso ro mem=64m loglevel=0 init=/ctest noop'
+	taskset -c 0 hyperfine -w 10 -r 50 '$(VMLINUX) ubd0=./test_libc.iso ro mem=64m loglevel=0 init=/ctest noop'
 
 demo: alpine-test.ext3
 	taskset -c 0 $(VMLINUX) eth0=tuntap,tap100,fe:fd:0:0:0:1,10.0.0.1 ubd0=./$< rw mem=1024m loglevel=0 init=/init.sh /bin/sh

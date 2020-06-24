@@ -1,8 +1,9 @@
 #!/bin/bash
-# Usage: ./image2rootfs.sh app tag
+# Usage: ./image2rootfs.sh app tag fs
 die() { echo "$*" 1>&2 ; exit 1; }
 
 app=$1 tag=$2
+fs=${3:-ext3}
 echo $app $tag
 
 container_id=$(docker create $app:$tag || die "run container failed.")
@@ -27,6 +28,7 @@ mknod -m 444 $mnt/dev/urandom c 1 9
 
 # replace busybox with the nommu busybox
 cp ${BUSYBOX_BUILD}/busybox $mnt/bin/busybox
+md5sum $mnt/bin/busybox
 
 # install our "init" file
 cp init.sh $mnt/init.sh
@@ -37,7 +39,27 @@ cp hosts $mnt/etc/hosts
 cp ${MUSL_BUILD}/lib/libc.so $mnt/lib/ld-musl-x86_64.so.1
 cp ${MUSL_BUILD}/lib/libc.so $mnt/lib/libc.musl-x86_64.so.1
 cp ${MUSL_BUILD}/lib/libc.so $mnt/lib/libc.so
+md5sum $mnt/lib/libc.so
 
-# 2**20 blocks of size 1024 makes 1GB
-genext2fs -z -f -q -U -P -b $((2**20)) -d $mnt $app.ext3
+case "$fs" in
+	ext2)
+		genext2fs -z -f -q -U -P -b $((2**20)) -d $mnt $app.$fs
+		;;
+	ext3)
+		genext2fs -z -f -q -U -P -b $((2**20)) -d $mnt $app.$fs
+		tune2fs -j $app.$fs
+		;;
+	ext4)
+		genext2fs -z -f -q -U -P -b $((2**20)) -d $mnt $app.$fs
+		tune2fs -j $app.$fs
+		tune2fs -O extent,uninit_bg,dir_index $app.$fs
+		;;
+	iso)
+		genisoimage -o $app.$fs -r $mnt
+		;;
+	*)
+		echo "Not processed"
+		;;
+esac
+
 rm -rf $mnt
