@@ -87,3 +87,9 @@ boot_libc:
 
 demo: alpine-test.ext3
 	taskset -c 0 $(VMLINUX) eth0=tuntap,tap100,fe:fd:0:0:0:1,10.0.0.1 ubd0=./$< rw mem=1024m loglevel=0 init=/init.sh /bin/sh
+
+demo2: alpine-test.ext3
+	taskset -c 0 $(VMLINUX) rw ubd0=./$< mem=1024m loglevel=0 init=/init.sh /bin/sh
+
+syscalls:
+	sudo bash -c "sysdig proc.name=vmlinux and evt.type!='switch' and evt.type!='signaldeliver' and evt.dir='>' --print=' %evt.type' | python histo.py"

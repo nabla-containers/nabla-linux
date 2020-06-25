@@ -1,7 +1,7 @@
 #include "syscall_nr.h"
 
 static unsigned long __sysinfo = 0;
-#include "syscall_arch.h"
+#include "syscall-x86_64.h"
 
 typedef unsigned long size_t;
 
