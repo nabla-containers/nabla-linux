@@ -25,22 +25,22 @@ tensorflow-alpine.ext3: init.sh entropy
 	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh bwits/tensorflow-alpine latest ext3'
 
 testpie: test.c
-	$(MUSL_BUILD)/bin/musl-gcc -nostdlib -pie -fPIE -fomit-frame-pointer test.c -o $@
+	$(MUSL_BUILD)/bin/musl-gcc -nostdlib -pie -fPIE -fomit-frame-pointer $< -o $@
 
 test: test.c
-	$(MUSL_BUILD)/bin/musl-gcc -O0 -ggdb -nostdlib -shared -fPIC -fomit-frame-pointer test.c -o $@
+	$(MUSL_BUILD)/bin/musl-gcc -O0 -ggdb -nostdlib -shared -fPIC -fomit-frame-pointer $< -o $@
 
 exit: exit.c
-	$(MUSL_BUILD)/bin/musl-gcc -O0 -ggdb -nostdlib -shared -fPIC -fomit-frame-pointer exit.c -o $@
+	$(MUSL_BUILD)/bin/musl-gcc -O0 -ggdb -nostdlib -shared -fPIC -fomit-frame-pointer $< -o $@
 
 exitpie: exit.c
-	$(MUSL_BUILD)/bin/musl-gcc -nostdlib -pie -fPIE -fomit-frame-pointer exit.c -o $@
+	$(MUSL_BUILD)/bin/musl-gcc -nostdlib -pie -fPIE -fomit-frame-pointer $< -o $@
 
 noop: noop.c
 	$(MUSL_BUILD)/bin/musl-gcc -O0 -ggdb -nostdlib -shared -fPIC -fomit-frame-pointer $< -o $@
 
 ctest: ctest.c
-	$(MUSL_BUILD)/bin/musl-gcc -pie -fPIE ctest.c -o $@
+	$(MUSL_BUILD)/bin/musl-gcc -pie -fPIE $< -o $@
 
 futex: futex.c
 	$(MUSL_BUILD)/bin/musl-gcc -pie -fPIE $< -o $@
