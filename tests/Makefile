@@ -4,9 +4,9 @@ MUSL_BUILD ?= ../musl-libc/build
 BUSYBOX_BUILD ?= ../busybox
 VMLINUX ?= ../linux-um-nommu/vmlinux
 
-# sudo is needed for mounting in ./image2rootfs_mount.sh
-# Otherwise, use ./image2rootfs.sh which doesn't require privileges and
-# uses genext2fs instead.
+# sudo is needed for mounting in ./image2rootfs_mount.sh. Otherwise, use
+# ./image2rootfs.sh which doesn't require privileges and uses genext2fs
+# instead.
 
 alpine-test.ext3: init.sh entropy
 	sudo bash -c 'BUSYBOX_BUILD=$(BUSYBOX_BUILD) MUSL_BUILD=$(MUSL_BUILD) ./image2rootfs_mount.sh kollerr/alpine-test latest ext3'
@@ -92,4 +92,11 @@ demo2: alpine-test.ext3
 	taskset -c 0 $(VMLINUX) rw ubd0=./$< mem=1024m loglevel=0 init=/init.sh /bin/sh
 
 syscalls:
+	# don't remove the space before %evt.type
 	sudo bash -c "sysdig proc.name=vmlinux and evt.type!='switch' and evt.type!='signaldeliver' and evt.dir='>' --print=' %evt.type' | python histo.py"
+
+clean:
+	rm -f alpine-test.ext3 clone ctest \
+	docker/linux-um-nommu/alpine-test.ext3 \
+	docker/linux-um-nommu/vmlinux \
+	entropy exit exitpie futex noop test test_libc.iso testpie
