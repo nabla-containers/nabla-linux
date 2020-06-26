@@ -1,5 +1,12 @@
 # Nabla Linux
 
+# One liner
+
+```
+docker run --rm -it kollerr/linux-um-nommu
+```
+This is running the image at `tests/docker/linux-um-nommu/Dockerfile` which is using `alpine-test.ext3` which is built using the `alpine-test.ext3` target
+in `tests/Makefile` (which is based on the image at `tests/docker/alpine/Dockerfile`).
 
 # Demo:
 
