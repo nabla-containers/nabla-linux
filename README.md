@@ -1,4 +1,4 @@
-This is an experimental type of Virtual Machine which does not use a hypervisor (no monitor, no emulation, no HW virtualization). A "VM" runs multiple processes on the same addresses space as a single user level process. The kernel runs in user space and it's sandboxed using seccomp. It's based on User-Mode-Linux (UML) and no-MMU.
+This is an experimental type of Linux Virtual Machine which does not use a hypervisor (no monitor, no emulation, no HW virtualization). Each one of these "VM" runs multiple processes on the same address-space as a single userlevel process. The "VM" kernel runs in userspace and it's sandboxed using seccomp. It's based on User-Mode-Linux (UML) and the no-MMU configuration.
 
 # Try it with this one-liner
 
