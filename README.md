@@ -39,7 +39,7 @@ make demo
 
 # Limitations
 
-- No virtual memory (VM) and no memory protection.
-- No forks. Which is partially solved by using vforks instead.
+- No virtual memory (VM) and no memory protection. A single address space is shared by multiple processes, so a process writing into the NULL page will "kill" every process running in the VM (not what you would expect).
+- No forks. Which is partially solved by using vforks.
 - Can only run PIE executables (https://en.wikipedia.org/wiki/Position-independent_code).
 - Have to use our modified musl libc.
