@@ -5,8 +5,8 @@ This is an experimental type of Linux Virtual Machine that does not use a hyperv
 ```
 docker run --rm -it kollerr/linux-um-nommu
 ```
-The source dockerfile is `tests/docker/linux-um-nommu/Dockerfile` which uses the `alpine-test.ext3` image built
-by `tests/Makefile` (which is then based on `tests/docker/alpine/Dockerfile`).
+The source dockerfile is [tests/docker/linux-um-nommu/Dockerfile](https://github.com/nabla-containers/nabla-linux/blob/master/tests/docker/linux-um-nommu/Dockerfile) which uses the `alpine-test.ext3` image built
+by [tests/Makefile](https://github.com/nabla-containers/nabla-linux/blob/master/tests/Makefile#L11) (which is then based on [tests/docker/alpine/Dockerfile](https://github.com/nabla-containers/nabla-linux/blob/master/tests/docker/alpine/Dockerfile)).
 
 # Introduction
 
