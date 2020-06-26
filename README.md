@@ -1,19 +1,12 @@
-This is an experimental type of Linux Virtual Machine that does not use a hypervisor (no monitor, no emulation, no HW virtualization). A guest runs multiple processes on the same address-space as a single userspace process on top of 12 syscalls (sandboxed using seccomp). The guest kernel is a modified Linux kernel based on User-Mode-Linux (UML) and the no-MMU configuration.
+This is an experimental type of Linux Virtual Machine that does not use a hypervisor (no monitor, no emulation, no HW virtualization). A guest runs multiple processes on the same address-space as a single userspace process on top of 12 syscalls (sandboxed using seccomp). The guest kernel is a modified Linux configured with User-Mode-Linux (UML) and no-MMU.
 
 # Try it with this one-liner
 
 ```
 docker run --rm -it kollerr/linux-um-nommu
 ```
-The source dockerfile is `tests/docker/linux-um-nommu/Dockerfile` which uses the `alpine-test.ext3` target
-in `tests/Makefile` (which is then based on `tests/docker/alpine/Dockerfile`).
-
-# Demo:
-
-[![asciicast](https://asciinema.org/a/343173.svg)](https://asciinema.org/a/343173)
-
-This shows a run with the host syscalls on the left. The point of this is to show that lots of applications just
-work while running on a small set of syscalls.
+The source dockerfile is `tests/docker/linux-um-nommu/Dockerfile` which uses the `alpine-test.ext3` image built
+by `tests/Makefile` (which is then based on `tests/docker/alpine/Dockerfile`).
 
 # Introduction
 
@@ -24,6 +17,13 @@ Nabla Linux is a Linux virtual machine that runs as a single unprivileged user-l
 ![nabla-linux](images/nabla-linux.png)
 
 Our initial experiments show that this Linux VM is capable of running multiple unmodified binaries from Alpine (like python, nginx, redis), and can boot in 6 milliseconds (to our knowledge, this is the fastest); albeit with some limitations: PIE executables only, and no forks (processes are emulated using vforks).
+
+# Demo:
+
+[![asciicast](https://asciinema.org/a/343173.svg)](https://asciinema.org/a/343173)
+
+This shows a run with the host syscalls on the left. The point of this is to show that lots of applications just
+work while running on a small set of syscalls.
 
 # Build and test
 
