@@ -21,7 +21,21 @@ Container runtimes have been using virtualization as a way of improving isolatio
 
 Nabla Linux is a Linux virtual machine that runs as a single unprivileged user-level process on top of only 12 syscalls. We achieve isolation equivalent to virtual machines, without using a monitor, by restricting the VM process to only these 12 system calls using seccomp. The system was built on top of a combination of two well known Linux features: user mode linux (UML) and no-MMU support (used for embedded devices) both in the kernel and in userspace (musl and busybox).
 
+![nabla-linux](images/nabla-linux.png)
+
 Our initial experiments show that this Linux VM is capable of running multiple unmodified binaries from Alpine (like python, nginx, redis), and can boot in 6 milliseconds (to our knowledge, this is the fastest); albeit with some limitations: PIE executables only, and no forks (processes are emulated using vforks).
+
+# Build and test
+
+A single `make` at the root should build linux, musl, and busybox. Then you need a disk image (think of this as a VM). You
+can create one based on alpine using the `alpine-test.ext3` target in `tests/`, or just do an `make demo` in `tests/` which
+will build one and then run it.
+
+```
+make
+cd tests
+make demo
+```
 
 # Limitations
 
@@ -29,6 +43,3 @@ Our initial experiments show that this Linux VM is capable of running multiple u
 - No forks. Which is partially solved by using vforks instead.
 - Can only run PIE executables (https://en.wikipedia.org/wiki/Position-independent_code).
 - Have to use our modified musl libc.
-
-# Example: alpine-test.ext3
-
