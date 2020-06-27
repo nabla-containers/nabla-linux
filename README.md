@@ -28,18 +28,17 @@ work while running on a small set of syscalls.
 # Build and test
 
 A single `make` at the root should build linux, musl, and busybox. Then you need a disk image (think of this as a VM). You
-can create one based on alpine using the `alpine-test.ext3` target in `tests/`, or just do an `make demo` in `tests/` which
+can create a raw disk file based on alpine using the `alpine-test.ext3` target in `tests/`, or just do a `make demo` in `tests/` which
 will build one and then run it.
 
 ```
 make
-cd tests
-make demo
+cd tests && make demo
 ```
 
 # Limitations
 
 - No virtual memory (VM) and no memory protection. A single address space is shared by multiple processes, so a process writing into the NULL page will "kill" every process running in the VM (not what you would expect).
-- No forks. Which is partially solved by using vforks.
+- No `sys_fork`. Which is partially solved by supporting `vfork` (and `posix_spawn`). The catch is that applications need to use `vfork` or `posix_spawn` instead of fork and exec (like busybox configured for NOMMU). Applications doing `sys_fork` will get an `EINVAL`.
 - Can only run PIE executables (https://en.wikipedia.org/wiki/Position-independent_code).
-- Have to use our modified musl libc.
+- Have to use our modified musl libc. This libc supports making syscalls over vsyscall (i.e. a function call instead of the `syscall` instruction).
