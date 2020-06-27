@@ -40,5 +40,5 @@ cd tests && make demo
 
 - No virtual memory (VM) and no memory protection. A single address space is shared by multiple processes, so a process writing into the NULL page will "kill" every process running in the VM (not what you would expect).
 - No `sys_fork`. Which is partially solved by supporting `vfork` (and `posix_spawn`). The catch is that applications need to use `vfork` or `posix_spawn` instead of fork and exec (like busybox configured for NOMMU). Applications doing `sys_fork` will get an `EINVAL`.
-- Can only run PIE executables (https://en.wikipedia.org/wiki/Position-independent_code).
-- Have to use our modified musl libc. This libc supports making syscalls over vsyscall (i.e. a function call instead of the `syscall` instruction).
+- Can only run [PIE executables](https://en.wikipedia.org/wiki/Position-independent_code).
+- Have to use our modified musl libc. This libc supports making syscalls over [vsyscall](https://lwn.net/Articles/446528/) (i.e. a function call instead of the `syscall` instruction).
