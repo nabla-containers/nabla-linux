@@ -39,6 +39,6 @@ cd tests && make demo
 # Limitations
 
 - No virtual memory (VM) and no memory protection. A single address space is shared by multiple processes, so a process writing into the NULL page will "kill" every process running in the VM (not what you would expect).
-- No `sys_fork`. Which is partially solved by supporting `vfork` (and `posix_spawn`). The catch is that applications need to use `vfork` or `posix_spawn` instead of fork and exec (like busybox configured for NOMMU). Applications doing `sys_fork` will get an `EINVAL`.
-- Can only run [PIE executables](https://en.wikipedia.org/wiki/Position-independent_code).
+- No `sys_fork`. Which is partially solved by supporting `vfork` (and `posix_spawn`). The catch is that applications need to use `vfork` or `posix_spawn` instead of fork and exec (like busybox configured for NOMMU). Applications doing `sys_fork` will get an `EINVAL`. The most common usage of fork and exec (running a new program) is the shell: that's why we need busybox configured for NOMMU. Other applications like nginx or redis don't fork (haven't seen them fork at least), so they don't need to be patched.
+- Can only run [PIE executables](https://en.wikipedia.org/wiki/Position-independent_code). This is the case for most of the binaries in Alpine Linux as explained [here/Secure](https://alpinelinux.org/about/).
 - Have to use our modified musl libc. This libc supports making syscalls over [vsyscall](https://lwn.net/Articles/446528/) (i.e. a function call instead of the `syscall` instruction).
