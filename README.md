@@ -1,5 +1,7 @@
 This is an experimental type of Linux Virtual Machine that does not use a hypervisor (no monitor, no emulation, no HW virtualization). A guest runs multiple processes on the same address-space as a single host process on top of 12 syscalls (sandboxed using seccomp). The guest kernel is a modified Linux configured with User-Mode-Linux (UML) and no-MMU.
 
+The best way to see this is as a modified User-Mode-Linux (UML) that is faster and more secure, but is significantly less general-purpose.
+
 # Try it with this one-liner
 
 ```
@@ -35,6 +37,16 @@ will build one and then run it.
 make
 cd tests && make demo
 ```
+
+# Related projects
+
+- Linux Kernel Library (LKL) which also uses the NOMMU config but has a different use case: to be used as a library instead of a "VM" like this. There are two very interesting developments related to LKL:
+  - [Unifying LKL into UML](https://lwn.net/Articles/804177/)
+  - [Porting Linux to Nabla Containers](https://dev.to/retrage/porting-linux-to-nabla-containers-j3)
+  There is a lot of common code between these three efforts.
+  
+- Gvisor which looks like UML when running in ptrace mode (one host process per guest process trapped using ptrace).
+- The solo5-spt monitor which runs unikernels as a single process sandboxed using seccomp (same idea).
 
 # Limitations
 
