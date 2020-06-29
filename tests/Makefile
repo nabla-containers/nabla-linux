@@ -96,7 +96,7 @@ syscalls:
 	sudo bash -c "sysdig proc.name=vmlinux and evt.type!='switch' and evt.type!='signaldeliver' and evt.dir='>' --print=' %evt.type' | python histo.py"
 
 clean:
-	rm -f alpine-test.ext3 clone ctest \
+	rm -f alpine-test.ext3 test_libc.iso clone ctest \
 	docker/linux-um-nommu/alpine-test.ext3 \
 	docker/linux-um-nommu/vmlinux \
 	entropy exit exitpie futex noop test test_libc.iso testpie
