@@ -41,8 +41,8 @@ cd tests && make demo
 # Related projects
 
 - Linux Kernel Library (LKL) which also uses the NOMMU config but has a different use case: to be used as a library instead of a "VM". There are two very interesting developments related to LKL:
-  - [Unifying LKL into UML](https://lwn.net/Articles/804177/)
-  - [Porting Linux to Nabla Containers](https://dev.to/retrage/porting-linux-to-nabla-containers-j3)
+  - [Unifying LKL into UML](https://lwn.net/Articles/804177/). Most of the kernel changes are already implemented in the LKL patch. After it's merged, "nabla linux" could be implemented with mostly userlevel changes.
+  - [Porting Linux to Nabla Containers](https://dev.to/retrage/porting-linux-to-nabla-containers-j3).
   
 - Gvisor which looks like UML when running in ptrace mode (one host process per guest process trapped using ptrace).
 - The solo5-spt monitor which runs unikernels as a single process sandboxed using seccomp (same idea).
